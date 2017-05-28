@@ -2,7 +2,7 @@ class CreateSports < ActiveRecord::Migration[5.1]
   def change
     create_table :sports do |t|
       t.string :name, :null => false
-      t.text :url, :null => false
+      t.text :icon_url, :null => false
 
       t.timestamps
     end

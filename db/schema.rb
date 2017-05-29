@@ -35,13 +35,14 @@ ActiveRecord::Schema.define(version: 20170528010255) do
   end
 
   create_table "organizations", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "sports", force: :cascade do |t|
     t.string "name", null: false
-    t.text "icon_url", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -68,6 +69,7 @@ ActiveRecord::Schema.define(version: 20170528010255) do
     t.string "email"
     t.integer "height"
     t.integer "weight"
+    t.boolean "profile_visible"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

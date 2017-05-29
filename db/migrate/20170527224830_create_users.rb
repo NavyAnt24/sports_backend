@@ -7,6 +7,8 @@ class CreateUsers < ActiveRecord::Migration[5.1]
       t.integer :height # in inches
       t.integer :weight # in pounds
 
+      t.boolean :profile_visible
+
       t.timestamps
     end
   end

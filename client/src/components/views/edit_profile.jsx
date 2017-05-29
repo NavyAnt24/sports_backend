@@ -5,6 +5,13 @@ export default class EditProfile extends Component {
 	constructor() {
 		super();
 		this.state = {
+			first_name: null,
+			last_name: null,
+			height: null,
+			weight: null,
+			profile_visible: null,
+			favorite_sports: [],
+
 			sportOptions: [
 				{ key: 'Badminton', value: 'Badminton', text: 'Badminton' },
 				{ key: 'Baseball', value: 'Baseball', text: 'Baseball' },
@@ -25,36 +32,100 @@ export default class EditProfile extends Component {
 				{ key: 'Wrestling', value: 'Wrestling', text: 'Wrestling' }
 			]
 		}
+
+		this.handleInputChange = this.handleInputChange.bind(this);
+		this.handleDropdownChange = this.handleDropdownChange.bind(this);
+		this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+	}
+
+	handleCheckboxChange(event, checkboxObj) {
+		const profileVisible = checkboxObj.checked;
+
+		this.setState({
+			profile_visible: profileVisible
+		});
+	}
+
+	handleInputChange(event) {
+		const target = event.target;
+		const name = target.name;
+		const value = target.value;
+
+		this.setState({
+			[name]: value
+		});
+	}
+
+	handleDropdownChange(event, dropdownObj) {
+		const currentSportsArr = dropdownObj.value;
+
+		this.setState({
+			favorite_sports: currentSportsArr
+		});
+	}
+
+	handleSubmit(event) {
+		event.preventDefault();
+
+		
+		var myRequest = new Request('api/profile', {method: 'POST', body: '{"foo":"bar"}'});
+ 
 	}
 
 	render() {
 		return (
 	      <div id="edit-profile">
 	      	<h1>My Profile</h1>
-	        <Form>
+	        <Form onSubmit={this.handleSubmit}>
 	        	<Form.Field>
 	        		<label>First Name</label>
-	        		<input placeholder="First Name" />
+	        		<input 	name="first_name"
+	        				placeholder="First Name"
+	        				onChange={this.handleInputChange}
+	        		 />
 	        	</Form.Field>
 	        	<Form.Field>
 	        		<label>Last Name</label>
-	        		<input placeholder="Last Name" />
+	        		<input
+	        				name="last_name"
+	        				placeholder="Last Name"
+	        				onChange={this.handleInputChange}
+	        		/>
 	        	</Form.Field>
 	        	<Form.Field>
 	        		<label>Height</label>
-	        		<input placeholder="Height (in inches)" />
+	        		<input 
+	        				name="height"
+	        				placeholder="Height (in inches)"
+	        				onChange={this.handleInputChange}
+	        		/>
 	        	</Form.Field>
 	        	<Form.Field>
 	        		<label>Weight</label>
-	        		<input placeholder="Weight (in pounds)" />
+	        		<input 
+	        				name="weight"
+	        				placeholder="Weight (in pounds)"
+	        				onChange={this.handleInputChange}
+	        		/>
 	        	</Form.Field>
 	        	<Form.Field>
 	        		<label>Visible?</label>
-	        		<Checkbox label="Make my profile visible" />
+	        		<Checkbox 
+	        				name="profile_visible"
+	        				label="Make my profile visible"
+	        				onChange={this.handleCheckboxChange}
+	        				toggle
+	        		/>
 	        	</Form.Field>
 	        	<Form.Field>
 	        		<label>Favorite Sports</label>
-	        		<Dropdown placeholder='Favorite Sports' fluid multiple search selection options={this.state.sportOptions} />
+	        		<Dropdown 
+	        				name="favorite_sports"
+	        				placeholder='Favorite Sports' fluid multiple search selection 
+	        				options={this.state.sportOptions}
+	        				onChange={this.handleDropdownChange}
+	        		/>
 	        	</Form.Field>
 	        	<Button type="submit">Submit</Button>
 	        </Form>

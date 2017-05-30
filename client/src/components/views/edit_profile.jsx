@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Form, Dropdown, Button, Checkbox } from "semantic-ui-react";
+import _ from 'underscore';
 
 export default class EditProfile extends Component {
 	constructor() {
@@ -68,9 +69,16 @@ export default class EditProfile extends Component {
 	handleSubmit(event) {
 		event.preventDefault();
 
-		
-		var myRequest = new Request('api/profile', {method: 'POST', body: '{"foo":"bar"}'});
- 
+		const params = _.pick(this.state, 'first_name', 'last_name', 'height', 'weight', 'profile_visible', 'favorite_sports');
+
+		params['id'] = 1;
+
+		const postProfileReq = new Request('api/users/1', {method: 'PUT', body: JSON.stringify(params)});
+
+		window.fetch(postProfileReq)
+			  .then(function (response) {
+			  	debugger
+			  });
 	}
 
 	render() {

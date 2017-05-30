@@ -27,6 +27,13 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   def update
     if @user.update(user_params)
+      favorite_sports = params[:favorite_sports]
+      if (favorite_sports)
+        sports = Sport.where(name: favorite_sports)
+        @user.sports = sports
+        @user.save
+      end
+
       render json: @user
     else
       render json: @user.errors, status: :unprocessable_entity
@@ -46,6 +53,6 @@ class UsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.fetch(:user, {}).permit(:first_name, :last_name, :height, :weight, :profile_visible, :favorite_sports)
+      params.fetch(:user, {}).permit(:first_name, :last_name, :height, :weight, :profile_visible)
     end
 end

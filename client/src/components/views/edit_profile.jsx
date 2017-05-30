@@ -73,12 +73,18 @@ export default class EditProfile extends Component {
 
 		params['id'] = 1;
 
-		const postProfileReq = new Request('api/users/1', {method: 'PUT', body: JSON.stringify(params)});
+		const postProfileReq = new Request('api/users/1', {
+			method: 'PUT',
+			headers: {
+		    'Accept': 'application/json, text/plain, */*',
+		    'Content-Type': 'application/json'
+		  	},
+			body: JSON.stringify(params)
+		});
 
 		window.fetch(postProfileReq)
-			  .then(function (response) {
-			  	debugger
-			  });
+			  .then(res => res.json())
+			  .then(res => console.log(res));
 	}
 
 	render() {
